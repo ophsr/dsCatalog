@@ -1,6 +1,5 @@
 package com.devsuperior.dsCatalog.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.devsuperior.dsCatalog.entities.Category;
