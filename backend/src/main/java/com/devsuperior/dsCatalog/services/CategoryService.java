@@ -9,9 +9,12 @@ import javax.persistence.EntityNotFoundException;
 import com.devsuperior.dsCatalog.dto.CategoryDTO;
 import com.devsuperior.dsCatalog.entities.Category;
 import com.devsuperior.dsCatalog.repositories.CategoryRepository;
+import com.devsuperior.dsCatalog.services.exceptions.DataBaseException;
 import com.devsuperior.dsCatalog.services.exceptions.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,9 +59,18 @@ public class CategoryService {
             entity = repository.save(entity);
             return new CategoryDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Id not found" + id);
+            throw new ResourceNotFoundException("Id not found: " + id);
         }
     }
 
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found: " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException("Integrity violation");
+        }
+    }
 
 }
