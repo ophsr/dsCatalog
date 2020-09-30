@@ -1,25 +1,35 @@
 package com.devsuperior.dsCatalog.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
 
 //Indentifica que é uma entidate e dar nome a tabela
 @Entity
-@Table(name="tb_category")
+@Table(name = "tb_category")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    //id autoincrement
+    // id autoincrement
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    //Define a data e hora fora da time zone no bd
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     public Category() {
     }
@@ -43,6 +53,25 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    //Ao criar uma category ele guarda o instante.now no createdAt
+    @PrePersist
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+    //Ao atuzalizar uma category ele guarda o instante.now no updatedAt
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = Instant.now();
     }
 
     @Override
@@ -73,5 +102,4 @@ public class Category implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
-
 }
