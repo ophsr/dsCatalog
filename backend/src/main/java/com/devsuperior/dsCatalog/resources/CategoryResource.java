@@ -2,7 +2,7 @@ package com.devsuperior.dsCatalog.resources;
 
 import java.util.List;
 
-import com.devsuperior.dsCatalog.entities.Category;
+import com.devsuperior.dsCatalog.dto.CategoryDTO;
 import com.devsuperior.dsCatalog.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class CategoryResource {
     private CategoryService service;
     // ResponseEntity - encapsula resposta HTTP
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<CategoryDTO>> findAll() {
 
-        List<Category> list = service.findAll();
+        List<CategoryDTO> list = service.findAll();
 
         //Protocolo 200 - retorna no corpo uma lista
         return ResponseEntity.ok().body(list);
