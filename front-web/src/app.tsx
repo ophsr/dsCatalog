@@ -1,12 +1,12 @@
 import React from 'react';
 import './core/assets/styles/custom.scss'
 import './app.scss'
-import Navbar from './core/components/NavBar';
+import Routes from './Routes';
 
 
-const App = () => {  
-    return(
-        <Navbar/>
+const App = () => {
+    return (
+        <Routes />
     )
 }
 
