@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +25,13 @@ public class User implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
 
     // Associação
-    @ManyToMany
+    //
+    @ManyToMany(fetch = FetchType.EAGER)
     // Come é uma associação muito para muitos é preciso criar a terceira tabela
     @JoinTable(name = "tb_user_role",
             // id desta tabela/entidade

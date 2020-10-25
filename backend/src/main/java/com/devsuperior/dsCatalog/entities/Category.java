@@ -15,8 +15,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
-
 //Indentifica que é uma entidate e dar nome a tabela
 @Entity
 @Table(name = "tb_category")
