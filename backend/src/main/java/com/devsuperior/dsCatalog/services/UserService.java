@@ -6,9 +6,10 @@ import javax.persistence.EntityNotFoundException;
 
 import com.devsuperior.dsCatalog.dto.RoleDTO;
 import com.devsuperior.dsCatalog.dto.UserDTO;
+import com.devsuperior.dsCatalog.dto.UserInsertDTO;
+import com.devsuperior.dsCatalog.dto.UserUpdateDTO;
 import com.devsuperior.dsCatalog.entities.Role;
 import com.devsuperior.dsCatalog.entities.User;
-import com.devsuperior.dsCatalog.entities.UserInsertDTO;
 import com.devsuperior.dsCatalog.repositories.RoleRepository;
 import com.devsuperior.dsCatalog.repositories.UserRepository;
 import com.devsuperior.dsCatalog.services.exceptions.DataBaseException;
@@ -63,7 +64,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(long id, UserDTO dto) {
+    public UserDTO update(long id, UserUpdateDTO dto) {
         try {
             User entity = userRepository.getOne(id);
             copyDtoToEntity(dto, entity);
