@@ -2,6 +2,8 @@ package com.devsuperior.dsCatalog.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import com.devsuperior.dsCatalog.dto.ProductDTO;
 import com.devsuperior.dsCatalog.services.ProductService;
 
@@ -29,14 +31,12 @@ public class ProductResource {
 
     // ResponseEntity - encapsula resposta HTTP
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
+    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction
-            ){
-        
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction) ,orderBy);
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 
         Page<ProductDTO> list = service.findAll(pageRequest);
 
@@ -54,14 +54,14 @@ public class ProductResource {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
