@@ -26,7 +26,7 @@ const BaseForm = ({title,children}:Props) => {
                 onClick={handleCancel}>
                         CANCELAR
                 </button>
-                <button className="btn btn-primary border-radius-10">CANCELAR</button>
+                <button className="btn btn-primary border-radius-10">CADASTRAR</button>
             </div>
         </div>
     );
